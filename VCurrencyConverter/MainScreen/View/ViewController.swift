@@ -124,7 +124,10 @@ final class ViewController: UIViewController {
 extension ViewController: InputViewDelegate {
 
 	func selectNewCurrency() {
-		print("USD")
+		let nextViewController = SelectionViewController()
+//		self.navigationController?.pushViewController(vc, animated: true)
+//		self.present(nextViewController, animated: true, completion: nil)
+		presentPanModal(nextViewController)
 	}
 
 	func inputAmount(value: Double) {
