@@ -7,9 +7,14 @@
 
 import UIKit
 
+/// Вью контроллер главного экрана: Экран с конвертацией валюты
 final class ViewController: UIViewController {
 
 	private let currencyViewModel = CurrencyConverterViewModel()
+
+	// переменные для пересохранения ) 
+	private var localValue: Double = 0
+	private var localOutputCurrency: CBRCurrency = .USD
 
 	private let fromLabel: UILabel = {
 		let label = UILabel()
@@ -31,7 +36,7 @@ final class ViewController: UIViewController {
 		return label
 	}()
 
-	private lazy var resultCurrnecyLabel: InputView = {
+	private lazy var resultCurrencyLabel: InputView = {
 		let view = InputView()
 		view.delegate = self
 		return view
@@ -41,7 +46,7 @@ final class ViewController: UIViewController {
 		super.viewDidLoad()
 		self.navigationItem.title = "Обменник валют"
 		setupView()
-//		convertCurrency(value: 0, valueCurrency: .RUB, outputCurrency: .USD)
+		// При старте приложения по умолчанию выводим перевод из рублей в доллары )
 		convertCurrencyCBR(value: 0, valueCurrency: .RUB, outputCurrency: .USD)
 	}
 
@@ -51,54 +56,29 @@ final class ViewController: UIViewController {
 	///   - valueCurrency: наименование валюты для обмена
 	///   - outputCurrency: наименование валюты результата
 	func convertCurrencyCBR(value: Double,
-							valueCurrency: Currency,
-							outputCurrency: Currency) {
+							valueCurrency: CBRCurrency,
+							outputCurrency: CBRCurrency) {
 		// Обновили
 		currencyViewModel.updateExchangeRatesCBR()
 		// Получили данные
-		let secondResult = self.currencyViewModel.CBRconvert(value, valueCurrency: .RUB, outputCurrency: .USD)
+		let secondResult = self.currencyViewModel.CBRconvert(value, valueCurrency: .RUB, outputCurrency: outputCurrency)
+		localValue = secondResult ?? 0
+		localOutputCurrency = outputCurrency
 		// Обновили UI
 		DispatchQueue.main.async {
-			self.currencyToConvertLabel.currencyLabel.text = "RUB"
-			self.resultCurrnecyLabel.currencyLabel.text = "USD"
+			self.currencyToConvertLabel.currencyLabel.text = valueCurrency.rawValue
+			self.resultCurrencyLabel.currencyLabel.text = outputCurrency.rawValue
 			let result = String(format:"%f", secondResult ?? 0)
-			self.resultCurrnecyLabel.amountTextField.text = result
+			self.resultCurrencyLabel.amountTextField.text = result
 		}
 		print("••• \(value) RUB = \(secondResult ?? 0) USD •••")
 	}
 
-	func convertCurrency(value: Double,
-						 valueCurrency: Currency,
-						 outputCurrency: Currency) {
-		// Обновляем курс валют
-		currencyViewModel.updateExchangeRates(completion: {
-			// The code inside here runs after all the data is fetched.
-
-			// • Example_1 (USD to EUR):
-//			let doubleResult = self.currencyConverter.convert(10, valueCurrency: .USD, outputCurrency: .EUR)
-//			print("••• 10 USD = \(doubleResult!) EUR •••")
-
-			let secondResult = self.currencyViewModel.convert(value, valueCurrency: .RUB, outputCurrency: .USD)
-			DispatchQueue.main.async {
-				self.currencyToConvertLabel.currencyLabel.text = "RUB"
-//				self.currencyToConvertLabel.amountTextField.text = "\(value)"
-				self.resultCurrnecyLabel.currencyLabel.text = "USD"
-				let result = String(format:"%f", secondResult ?? 0)
-				self.resultCurrnecyLabel.amountTextField.text = result
-			}
-			print("••• \(value) RUB = \(secondResult!) USD •••")
-
-			// • Example_2 (EUR to GBP) - Returning a formatted String:
-//			let formattedResult = self.currencyConverter.convertAndFormat(10, valueCurrency: .EUR, outputCurrency: .GBP, numberStyle: .decimal, decimalPlaces: 4)
-//			print("••• Formatted Result (10 EUR to GBP): \(formattedResult!) •••")
-		})
-	}
-
-	func setupView() {
+	private func setupView() {
 		view.addSubview(fromLabel)
 		view.addSubview(currencyToConvertLabel)
 		view.addSubview(toLabel)
-		view.addSubview(resultCurrnecyLabel)
+		view.addSubview(resultCurrencyLabel)
 		NSLayoutConstraint.activate([
 			fromLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
 			fromLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
@@ -114,9 +94,9 @@ final class ViewController: UIViewController {
 			toLabel.topAnchor.constraint(equalTo: currencyToConvertLabel.bottomAnchor),
 			toLabel.heightAnchor.constraint(equalToConstant: 40),
 
-			resultCurrnecyLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-			resultCurrnecyLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-			resultCurrnecyLabel.topAnchor.constraint(equalTo: toLabel.bottomAnchor)
+			resultCurrencyLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+			resultCurrencyLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+			resultCurrencyLabel.topAnchor.constraint(equalTo: toLabel.bottomAnchor)
 		])
 	}
 }
@@ -124,15 +104,28 @@ final class ViewController: UIViewController {
 extension ViewController: InputViewDelegate {
 
 	func selectNewCurrency() {
-		let nextViewController = SelectionViewController()
+		let nextViewController = CurrencyListViewController(vc: self)
 //		self.navigationController?.pushViewController(vc, animated: true)
-//		self.present(nextViewController, animated: true, completion: nil)
-		presentPanModal(nextViewController)
+		self.present(nextViewController, animated: true, completion: nil)
+
+		// презент через шторку
+//		presentPanModal(nextViewController)
 	}
 
 	func inputAmount(value: Double) {
 		// пересчет по европейсокму банку
 //		convertCurrency(value: value, valueCurrency: .RUB, outputCurrency: .USD)
-		convertCurrencyCBR(value: value, valueCurrency: .RUB, outputCurrency: .USD)
+		convertCurrencyCBR(value: value, valueCurrency: .RUB, outputCurrency: localOutputCurrency)
+	}
+}
+
+extension ViewController: CurrencyListViewControllerDelegate {
+
+	func selectCurrency(vm: CurrencyViewModel) {
+		convertCurrencyCBR(value: localValue, valueCurrency: .RUB, outputCurrency: CBRCurrency(rawValue: vm.codeName)!)
+//		DispatchQueue.main.async {
+//			self.currencyToConvertLabel.currencyLabel.text = "RUB"
+//			self.resultCurrencyLabel.currencyLabel.text = vm.codeName
+//		}
 	}
 }

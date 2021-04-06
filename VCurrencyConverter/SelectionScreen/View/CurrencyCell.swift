@@ -7,7 +7,8 @@
 
 import UIKit
 
-class UserGroupMemberCell: UITableViewCell {
+/// Ячейка содержащая информацию о валюте
+final class CurrencyCell: UITableViewCell {
 
 	struct Constants {
 		static let contentInsets = UIEdgeInsets(top: 8.0, left: 16.0, bottom: 8.0, right: 16.0)
@@ -20,13 +21,13 @@ class UserGroupMemberCell: UITableViewCell {
 
 	// MARK: - Views
 
-	let avatarView: UIView = {
+	private let flagView: UIView = {
 		let view = UIView()
 		view.layer.cornerRadius = 8.0
 		return view
 	}()
 
-	let nameLabel: UILabel = {
+	private let codeNameLabel: UILabel = {
 		let label = UILabel()
 		label.textColor = #colorLiteral(red: 0.8196078431, green: 0.8235294118, blue: 0.8274509804, alpha: 1)
 		label.font = UIFont(name: "Lato-Bold", size: 17.0)
@@ -34,7 +35,7 @@ class UserGroupMemberCell: UITableViewCell {
 		return label
 	}()
 
-	let roleLabel: UILabel = {
+	private let fullCurrencyNameLabel: UILabel = {
 		let label = UILabel()
 		label.textColor = #colorLiteral(red: 0.7019607843, green: 0.7058823529, blue: 0.7137254902, alpha: 1)
 		label.backgroundColor = .clear
@@ -42,23 +43,21 @@ class UserGroupMemberCell: UITableViewCell {
 		return label
 	}()
 
-	lazy var memberDetailsStackView: UIStackView = {
-		let stackView = UIStackView(arrangedSubviews: [nameLabel, roleLabel])
+	private lazy var titlesStackView: UIStackView = {
+		let stackView = UIStackView(arrangedSubviews: [codeNameLabel, fullCurrencyNameLabel])
 		stackView.axis = .vertical
 		stackView.alignment = .leading
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 		return stackView
 	}()
 
-	lazy var stackView: UIStackView = {
-		let stackView = UIStackView(arrangedSubviews: [avatarView, memberDetailsStackView])
+	private lazy var stackView: UIStackView = {
+		let stackView = UIStackView(arrangedSubviews: [flagView, titlesStackView])
 		stackView.alignment = .center
 		stackView.spacing = 16.0
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 		return stackView
 	}()
-
-	// MARK: - Initializers
 
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -75,21 +74,21 @@ class UserGroupMemberCell: UITableViewCell {
 		setupConstraints()
 	}
 
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
 	// MARK: - Layout
 
 	func setupConstraints() {
 
-		stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.contentInsets.top).isActive = true
-		stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.contentInsets.left).isActive = true
-		stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.contentInsets.right).isActive = true
-		stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.contentInsets.bottom).isActive = true
+		NSLayoutConstraint.activate([
+			stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.contentInsets.top),
+			stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.contentInsets.left),
+			stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.contentInsets.right),
+			stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.contentInsets.bottom)
+		])
 
-		let avatarWidthConstriant = avatarView.widthAnchor.constraint(equalToConstant: Constants.avatarSize.width)
-		let avatarHeightConstraint = avatarView.heightAnchor.constraint(equalToConstant: Constants.avatarSize.height)
+		let avatarWidthConstriant = flagView.widthAnchor.constraint(equalToConstant: Constants.avatarSize.width)
+		let avatarHeightConstraint = flagView.heightAnchor.constraint(equalToConstant: Constants.avatarSize.height)
 
 		[avatarWidthConstriant, avatarHeightConstraint].forEach {
 			$0.priority = UILayoutPriority(UILayoutPriority.required.rawValue - 1)
@@ -106,21 +105,27 @@ class UserGroupMemberCell: UITableViewCell {
 
 	override func setHighlighted(_ highlighted: Bool, animated: Bool) {
 		super.setHighlighted(highlighted, animated: animated)
-		avatarView.backgroundColor = presentable.avatarBackgroundColor
+		flagView.backgroundColor = presentable.avatarBackgroundColor
 	}
 
 	override func setSelected(_ selected: Bool, animated: Bool) {
 		super.setSelected(selected, animated: animated)
-		avatarView.backgroundColor = presentable.avatarBackgroundColor
+		flagView.backgroundColor = presentable.avatarBackgroundColor
 	}
 
 	// MARK: - View Configuration
 
 	func configure(with presentable: UserGroupMemberPresentable) {
 		self.presentable = presentable
-		nameLabel.text = presentable.name
-		roleLabel.text = presentable.role
-		avatarView.backgroundColor = presentable.avatarBackgroundColor
+		codeNameLabel.text = presentable.name
+		fullCurrencyNameLabel.text = presentable.role
+		flagView.backgroundColor = presentable.avatarBackgroundColor
 	}
 
+
+	func configure(with model: CurrencyViewModel) {
+		codeNameLabel.text = model.codeName + ": " + model.currencySing
+		fullCurrencyNameLabel.text = model.fullName
+		flagView.backgroundColor = presentable.avatarBackgroundColor
+	}
 }

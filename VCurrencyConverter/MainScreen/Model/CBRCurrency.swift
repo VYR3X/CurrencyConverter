@@ -49,4 +49,22 @@ enum CBRCurrency: String, CaseIterable {
 		.KRW: "Вон Республики Корея", .JPY: "Японских иен",
 		.RUB: "Российский рубль"
 	]
+
+	static let flagsByCurrencies: [Currency: String] = [
+		.AUD : "🇦🇺", .INR : "🇮🇳", .TRY : "🇹🇷",
+		.BGN : "🇧🇬", .ISK : "🇮🇸", .USD : "🇺🇸",
+		.BRL : "🇧🇷", .JPY : "🇯🇵", .ZAR : "🇿🇦",
+		.CAD : "🇨🇦", .KRW : "🇰🇷",
+		.CHF : "🇨🇭", .MXN : "🇲🇽",
+		.CNY : "🇨🇳", .MYR : "🇲🇾",
+		.CZK : "🇨🇿", .NOK : "🇳🇴",
+		.DKK : "🇩🇰", .NZD : "🇳🇿",
+		.EUR : "🇪🇺", .PHP : "🇵🇭",
+		.GBP : "🇬🇧", .PLN : "🇵🇱",
+		.HKD : "🇭🇰", .RON : "🇷🇴",
+		.HRK : "🇭🇷", .RUB : "🇷🇺",
+		.HUF : "🇭🇺", .SEK : "🇸🇪",
+		.IDR : "🇮🇩", .SGD : "🇸🇬",
+		.ILS : "🇮🇱", .THB : "🇹🇭",
+	]
 }

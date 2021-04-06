@@ -40,7 +40,7 @@ enum Currency: String, CaseIterable {
 		return namesWithFlags
 	}()
 
-	static let flagsByCurrencies : [Currency : String] = [
+	static let flagsByCurrencies: [Currency: String] = [
 		.AUD : "🇦🇺", .INR : "🇮🇳", .TRY : "🇹🇷",
 		.BGN : "🇧🇬", .ISK : "🇮🇸", .USD : "🇺🇸",
 		.BRL : "🇧🇷", .JPY : "🇯🇵", .ZAR : "🇿🇦",
