@@ -55,12 +55,12 @@ final class InputView: UIView {
 		textField.borderStyle = UITextField.BorderStyle.roundedRect
 		textField.delegate = self
 		textField.sizeToFit()
-		textField.placeholder = "0"
+		textField.placeholder = "Введите сумму"
 		let color = UIColor.white
-		textField.attributedPlaceholder = NSAttributedString(string: "Введите сумму", attributes: [NSAttributedString.Key.foregroundColor : color])
 //		https://stackoverflow.com/questions/28394933/how-do-i-check-when-a-uitextfield-changes
 		textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
 		textField.autocapitalizationType = .words
+		textField.keyboardType = .decimalPad
 		return textField
 	}()
 

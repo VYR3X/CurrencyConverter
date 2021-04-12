@@ -63,14 +63,26 @@ class CurrencyConverterViewModel {
 	чтобы перевести рубли в доллары надо  1.0 / model.rates["USD"] == 76 рублей )
 	**/
 	public func CBRconvert(_ value: Double,
-						valueCurrency: CBRCurrency,
-						outputCurrency: CBRCurrency) -> Double? {
+						_ valueCurrency: CBRCurrency,
+						_ outputCurrency: CBRCurrency) -> Double? {
 		guard let valueRate = exchangeRatesCBR[valueCurrency] else { return nil }
 		guard let outputRate = exchangeRatesCBR[outputCurrency] else { return nil }
-		let multiplier = valueRate / outputRate
+		let multiplier = outputRate / valueRate
 		print("Текущий курс валюты: \(multiplier)")
-		return value / multiplier
+		let kratnost = value * multiplier
+		return kratnost
 	}
+
+//	public func CBRconvert(_ value: Double,
+//						_ valueCurrency: CBRCurrency,
+//						_ outputCurrency: CBRCurrency) -> Double? {
+//		guard let valueRate = exchangeRatesCBR[valueCurrency] else { return nil }
+//		guard let outputRate = exchangeRatesCBR[outputCurrency] else { return nil }
+//		let multiplier = valueRate / outputRate
+//		let kratnost = value / multiplier
+////		print("Текущий курс валюты: \(outputRate)")
+//		return kratnost
+//	}
 
 	/**
 	 Converts a Double value based on it's currency and the output currency, and returns a formatted String.

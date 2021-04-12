@@ -42,6 +42,7 @@
 		01DF535925FD53AB00C5FEBE /* CurrencyXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DF535825FD53AB00C5FEBE /* CurrencyXMLParser.swift */; };
 		01DF536125FD53F700C5FEBE /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DF536025FD53F700C5FEBE /* Currency.swift */; };
 		01DF536625FD542800C5FEBE /* CurrencyConverterLocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DF536525FD542800C5FEBE /* CurrencyConverterLocalData.swift */; };
+		01EF568826247A8800FAD80B /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EF568726247A8800FAD80B /* OutputView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		01DF535825FD53AB00C5FEBE /* CurrencyXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyXMLParser.swift; sourceTree = "<group>"; };
 		01DF536025FD53F700C5FEBE /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		01DF536525FD542800C5FEBE /* CurrencyConverterLocalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterLocalData.swift; sourceTree = "<group>"; };
+		01EF568726247A8800FAD80B /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,6 +342,7 @@
 			children = (
 				01DF531E25FD50AA00C5FEBE /* ViewController.swift */,
 				01628E742605298C00ADADFB /* InputView.swift */,
+				01EF568726247A8800FAD80B /* OutputView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				014C1F2B2618EAA500048A42 /* CurrencyCell.swift in Sources */,
 				01DF536625FD542800C5FEBE /* CurrencyConverterLocalData.swift in Sources */,
 				014C1DAB2613D73200048A42 /* CurrencyJSONParser.swift in Sources */,
+				01EF568826247A8800FAD80B /* OutputView.swift in Sources */,
 				014C1DA62613D37B00048A42 /* JsonModel.swift in Sources */,
 				014C1F212618EA2800048A42 /* PanContainerView.swift in Sources */,
 				014C1F082618E9D100048A42 /* PanModalPresentable+UIViewController.swift in Sources */,

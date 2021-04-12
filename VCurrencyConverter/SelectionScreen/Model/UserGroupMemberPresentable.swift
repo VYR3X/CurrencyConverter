@@ -33,7 +33,6 @@ struct CurrencyModel: Equatable {
 	let flag: String
 }
 
-
 /// Вью модель для отображения информации о валюте в шторке
 struct CurrencyViewModel {
 
