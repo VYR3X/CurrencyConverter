@@ -85,8 +85,8 @@ final class InputView: UIView {
 		currencyButton.addSubview(currencyLabel)
 		currencyLabel.pinToSuperView()
 
-		modelInfoStaskView.addArrangedSubview(currencyButton)
 		modelInfoStaskView.addArrangedSubview(amountTextField)
+		modelInfoStaskView.addArrangedSubview(currencyButton)
 		addSubview(modelInfoStaskView)
 		self.backgroundColor = .clear
 

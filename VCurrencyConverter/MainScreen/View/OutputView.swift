@@ -82,8 +82,8 @@ final class OutputView: UIView {
 		currencyButton.addSubview(currencyLabel)
 		currencyLabel.pinToSuperView()
 
-		modelInfoStaskView.addArrangedSubview(currencyButton)
 		modelInfoStaskView.addArrangedSubview(resultLabel)
+		modelInfoStaskView.addArrangedSubview(currencyButton)
 		addSubview(modelInfoStaskView)
 		self.backgroundColor = .clear
 

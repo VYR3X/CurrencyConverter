@@ -8,7 +8,7 @@
 import Foundation
 
 /// ViewModel 
-class CurrencyConverterViewModel {
+final class CurrencyConverterViewModel {
 
 	private var exchangeRates: [Currency : Double] = [:]
 	private var exchangeRatesCBR: [CBRCurrency : Double] = [:]
@@ -112,5 +112,18 @@ class CurrencyConverterViewModel {
 		return formatter.string(from: NSNumber(value: value))
 	}
 
-}
 
+	/// Получаем дату как строку
+	/// - Returns: строка с датой в формате "dd-MM-yyyy"
+	func getCurrentShortDate() -> String {
+		let todaysDate = Date()
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "dd-MM-yyyy"
+		let date = dateFormatter.string(from: todaysDate)
+		return changeSymbol(date: date)
+	}
+
+	private func changeSymbol(date: String) -> String {
+		return date.replacingOccurrences(of: "-", with: ".", options: .literal, range: nil)
+	}
+}

@@ -68,6 +68,16 @@ final class ViewController: UIViewController {
 		return view
 	}()
 
+	private lazy var infoLabel: UILabel = {
+		let label = UILabel()
+		label.translatesAutoresizingMaskIntoConstraints = false
+		label.textColor = #colorLiteral(red: 0.7019607843, green: 0.7058823529, blue: 0.7137254902, alpha: 1)
+		label.backgroundColor = .clear
+		label.font = UIFont(name: "Lato-Regular", size: 13.0)
+		label.text = "По курсу ЦБ РФ на " + currencyViewModel.getCurrentShortDate()
+		return label
+	}()
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.navigationItem.title = "Обменник валют"
@@ -121,10 +131,11 @@ final class ViewController: UIViewController {
 		view.addSubview(changeButton)
 		view.addSubview(toLabel)
 		view.addSubview(resultCurrencyLabel)
+		view.addSubview(infoLabel)
 		NSLayoutConstraint.activate([
 			fromLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
 			fromLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-			fromLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+			fromLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
 			fromLabel.heightAnchor.constraint(equalToConstant: 40),
 
 			currencyToConvertLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
@@ -132,7 +143,7 @@ final class ViewController: UIViewController {
 			currencyToConvertLabel.topAnchor.constraint(equalTo: fromLabel.bottomAnchor),
 
 			changeButton.topAnchor.constraint(equalTo: currencyToConvertLabel.bottomAnchor, constant: 25),
-			changeButton.centerXAnchor.constraint(equalTo: fromLabel.centerXAnchor, constant: -100),
+			changeButton.centerXAnchor.constraint(equalTo: fromLabel.centerXAnchor),
 
 			toLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
 			toLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
@@ -141,7 +152,11 @@ final class ViewController: UIViewController {
 
 			resultCurrencyLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
 			resultCurrencyLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-			resultCurrencyLabel.topAnchor.constraint(equalTo: toLabel.bottomAnchor)
+			resultCurrencyLabel.topAnchor.constraint(equalTo: toLabel.bottomAnchor),
+
+			infoLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+			infoLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+			infoLabel.topAnchor.constraint(equalTo: resultCurrencyLabel.bottomAnchor, constant: 25)
 		])
 	}
 }
