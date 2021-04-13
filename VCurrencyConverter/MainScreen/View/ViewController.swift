@@ -30,6 +30,7 @@ final class ViewController: UIViewController {
 	private let fromLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Меняем:"
+		label.textColor = .black
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}()
@@ -55,6 +56,7 @@ final class ViewController: UIViewController {
 	private let toLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Получаем:"
+		label.textColor = .black
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}()
@@ -78,6 +80,7 @@ final class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.navigationItem.title = "Обменник валют"
+		self.navigationController?.navigationBar.barTintColor = .black
 		setupView()
 	}
 

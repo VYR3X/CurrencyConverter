@@ -49,15 +49,11 @@ final class OutputView: UIView {
 	lazy var resultLabel: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.backgroundColor = .white
+		label.backgroundColor = .clear
 		label.sizeToFit()
 		label.text = "0"
+		label.textColor = .black
 		label.textAlignment = .center
-		label.layer.cornerRadius = 3
-		label.layer.shadowColor = UIColor.black.cgColor
-		label.layer.shadowOpacity = 0.5
-		label.layer.shadowOffset = .zero
-		label.layer.shadowRadius = 1
 		return label
 	}()
 

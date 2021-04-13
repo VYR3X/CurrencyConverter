@@ -51,16 +51,20 @@ final class InputView: UIView {
 	lazy var amountTextField: UITextField = {
 		let textField = UITextField()
 		textField.translatesAutoresizingMaskIntoConstraints = false
-		textField.backgroundColor = .white
-		textField.borderStyle = UITextField.BorderStyle.roundedRect
+		textField.backgroundColor = .clear
+		textField.textColor = .black
 		textField.delegate = self
 		textField.sizeToFit()
-		textField.placeholder = "Введите сумму"
-		let color = UIColor.white
 //		https://stackoverflow.com/questions/28394933/how-do-i-check-when-a-uitextfield-changes
 		textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-		textField.autocapitalizationType = .words
+//		https://stackoverflow.com/questions/26076054/changing-placeholder-text-color-with-swift
+		// стандартный плейс холдер плохо отображается на устройстве
+		textField.attributedPlaceholder = NSAttributedString(string: "  Введите сумму",
+									 attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
 		textField.keyboardType = .decimalPad
+		textField.layer.borderColor = UIColor.systemGray.cgColor
+		textField.layer.borderWidth = 0.5
+		textField.layer.cornerRadius = 3
 		return textField
 	}()
 
@@ -103,8 +107,15 @@ final class InputView: UIView {
 	}
 
 	@objc func textFieldDidChange(_ textField: UITextField) {
-		let amount: Double = Double(textField.text!) ?? 0
+		guard let text = textField.text else { return }
+		let formettedText = changeSymbol(text: text)
+		let amount: Double = Double(formettedText) ?? 0
 		delegate?.inputAmount(value: amount)
+	}
+
+	/// на устройстве клавиатура имеет запятую ) приходиться менять на точку
+	private func changeSymbol(text: String) -> String {
+		return text.replacingOccurrences(of: ",", with: ".", options: .literal, range: nil)
 	}
 }
 
