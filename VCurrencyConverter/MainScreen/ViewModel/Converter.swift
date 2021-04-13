@@ -36,12 +36,22 @@ final class CurrencyConverterViewModel {
 		})
 	}
 
-
 	/// Обновляем обменный курс и после этого запускает завершение
 	/// - Parameter completion: обработчик завершения
 	public func updateExchangeRatesCBR(completion: @escaping() -> Void = {}) {
-		jsonParser.getCurrencyesJson()
-		exchangeRatesCBR = jsonParser.getExchangeRatesFromCBR()
+		jsonParser.getCurrencyesJson(completion: { result in
+			switch result {
+			case .success(let model):
+				print("Данные получены успешно \n")
+				// Получает курс обмена
+				self.exchangeRatesCBR = model
+				completion()
+			case .failure(let error):
+				print("error: \n \(error)")
+//				completion(.failure(error))
+			}
+		})
+//		exchangeRatesCBR = jsonParser.getExchangeRatesFromCBR()
 		CurrencyConverterLocalData.saveMostRecentExchangeRates(self.exchangeRates)
 	}
 
@@ -112,6 +122,8 @@ final class CurrencyConverterViewModel {
 		return formatter.string(from: NSNumber(value: value))
 	}
 
+
+	//	https://stackoverflow.com/questions/28332946/how-do-i-get-the-current-date-in-short-format-in-swift
 
 	/// Получаем дату как строку
 	/// - Returns: строка с датой в формате "dd-MM-yyyy"

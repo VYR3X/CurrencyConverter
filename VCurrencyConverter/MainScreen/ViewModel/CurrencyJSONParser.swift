@@ -7,7 +7,8 @@
 
 import Foundation
 
-class CurrencyJSONParser: NSObject {
+/// Класс отвечающий за парсинг курса валют
+final class CurrencyJSONParser: NSObject {
 
 	// URL для получения валют в json формате
 	private let jsonUrl = "https://www.cbr-xml-daily.ru/latest.js"
@@ -17,25 +18,40 @@ class CurrencyJSONParser: NSObject {
 		.RUB : 1.0 // Base currency
 	]
 
-	// Получение курса валют
-	public func getExchangeRatesFromCBR() -> [CBRCurrency : Double] {
-		return exchangeRatesCBR
-	}
-
 	/// Запрос на получение валют
-	func getCurrencyesJson() {
+	/// - Parameter completion: комплишн возвращает словарь с валютами
+	func getCurrencyesJson(completion: @escaping (Result<[CBRCurrency: Double], Error>) -> Void) {
 
 		let url = URL(string: jsonUrl)
 		let request = URLRequest(url: url!)
 
-		let task = URLSession.shared.dataTask(with: request) { data, responce, error in
-//			print(String(decoding: data!, as: UTF8.self))
-			if let data = data, let model = try? JSONDecoder().decode(CurrencyJsonModel.self, from: data) {
+		let session = URLSession.shared
+
+		session.dataTask(with: request) { data, responce, error in
+			guard let data = data else { return }
+			// Проверка успешно ли распарсились данные
+			do {
+				let currencyJsonModel = try JSONDecoder().decode(CurrencyJsonModel.self, from: data)
 				// перевожу [String: Double] -> [Currency: Double]
-				self.setExchangeRatesCBR(model: model.rates)
+				self.setExchangeRatesCBR(model: currencyJsonModel.rates)
+				// получаю словарь [Currency: Double]
+				let result = self.getExchangeRatesFromCBR()
+				// выход
+				completion(.success(result))
 			}
+			catch let jsonError {
+				print("could not parse data")
+				completion(.failure(jsonError))
+			}
+		}.resume()
+	}
+
+	/// Устанавливаем значения в словарь
+	private func setExchangeRatesCBR(model: [String: Double]) {
+		for item in model {
+			guard let exchangeRate = makeExchangeRate(currency: item.key, rate: item.value) else { return }
+			exchangeRatesCBR.updateValue(exchangeRate.rate, forKey: exchangeRate.currency)
 		}
-		task.resume()
 	}
 
 	/// Формируем кортеж с [USD: 0.01321, ....]
@@ -44,11 +60,8 @@ class CurrencyJSONParser: NSObject {
 		return (currency, rate)
 	}
 
-	private func setExchangeRatesCBR(model: [String: Double]) {
-		model.map { item in
-			guard let exchangeRate = makeExchangeRate(currency: item.key, rate: item.value) else { return }
-			exchangeRatesCBR.updateValue(exchangeRate.rate, forKey: exchangeRate.currency)
-//			return exchangeRate
-		}
+	/// Получение курса валют
+	private func getExchangeRatesFromCBR() -> [CBRCurrency : Double] {
+		return exchangeRatesCBR
 	}
 }

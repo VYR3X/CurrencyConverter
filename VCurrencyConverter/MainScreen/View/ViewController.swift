@@ -40,19 +40,16 @@ final class ViewController: UIViewController {
 		return view
 	}()
 
-	private lazy var changeButton: UIButton = {
-		let button = UIButton()
-		button.translatesAutoresizingMaskIntoConstraints = false
-		button.backgroundColor = .white
-		button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-		button.widthAnchor.constraint(equalToConstant: 50).isActive = true
-		button.layer.cornerRadius = 25
-		button.layer.shadowColor = UIColor.black.cgColor
-		button.layer.shadowOpacity = 0.5
-		button.layer.shadowOffset = .zero
-		button.layer.shadowRadius = 1
-		button.addTarget(self, action: #selector(selectNewCurrency(sender:)), for: .touchUpInside)
-		return button
+	private lazy var swapImageView: UIImageView = {
+		let imageView = UIImageView()
+		imageView.image = UIImage(named: "arrow1")
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+		imageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(swapCurrency))
+		imageView.isUserInteractionEnabled = true
+		imageView.addGestureRecognizer(tapGestureRecognizer)
+		return imageView
 	}()
 
 	private let toLabel: UILabel = {
@@ -118,17 +115,19 @@ final class ViewController: UIViewController {
 		print("••• \(value) \(localInputCurrency) = \(localresult) \(localOutputCurrency) •••")
 	}
 
-	@objc private func selectNewCurrency(sender: UIButton) {
+	@objc private func swapCurrency() {
 		let temp = localInputCurrency
 		localInputCurrency = localOutputCurrency
 		localOutputCurrency = temp
-		convertCurrencyCBR(value: inputValue, inputCurrency: localInputCurrency, outputCurrency: localOutputCurrency)
+		convertCurrencyCBR(value: inputValue,
+						   inputCurrency: localInputCurrency,
+						   outputCurrency: localOutputCurrency)
 	}
 
 	private func setupView() {
 		view.addSubview(fromLabel)
 		view.addSubview(currencyToConvertLabel)
-		view.addSubview(changeButton)
+		view.addSubview(swapImageView)
 		view.addSubview(toLabel)
 		view.addSubview(resultCurrencyLabel)
 		view.addSubview(infoLabel)
@@ -142,12 +141,12 @@ final class ViewController: UIViewController {
 			currencyToConvertLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
 			currencyToConvertLabel.topAnchor.constraint(equalTo: fromLabel.bottomAnchor),
 
-			changeButton.topAnchor.constraint(equalTo: currencyToConvertLabel.bottomAnchor, constant: 25),
-			changeButton.centerXAnchor.constraint(equalTo: fromLabel.centerXAnchor),
+			swapImageView.topAnchor.constraint(equalTo: currencyToConvertLabel.bottomAnchor, constant: 25),
+			swapImageView.centerXAnchor.constraint(equalTo: fromLabel.centerXAnchor),
 
 			toLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
 			toLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-			toLabel.topAnchor.constraint(equalTo: changeButton.bottomAnchor),
+			toLabel.topAnchor.constraint(equalTo: swapImageView.bottomAnchor),
 			toLabel.heightAnchor.constraint(equalToConstant: 40),
 
 			resultCurrencyLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),

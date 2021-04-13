@@ -6,8 +6,8 @@
 //
 import Foundation
 
-// Private Classes:
-class CurrencyConverterLocalData {
+/// Класс для хранения/чтения курса валют в UserDefaults
+final class CurrencyConverterLocalData {
 
 	// Structs:
 	struct Keys {
@@ -17,8 +17,7 @@ class CurrencyConverterLocalData {
 	// Static Properties:
 	// • This will never be used once the method CurrencyConverter.updateExchangeRates is called with internet access.
 	// • This is just an emergency callback, in case the user doesn't have internet access the first time running the app.
-	// Updated in: 04/15/2019.
-	static let fallBackExchangeRates : [Currency : Double] = [
+	static let fallBackExchangeRates: [Currency: Double] = [
 		.USD : 1.1321,
 		.JPY : 126.76,
 		.BGN : 1.9558,
@@ -85,8 +84,8 @@ class CurrencyConverterLocalData {
 	/**
 	 Converts the [Currency : Double] dictionary with the exchange rates to a [String : Double] one so it can be stored locally.
 	 */
-	private static func convertExchangeRatesForUserDefaults(_ exchangeRates : [Currency : Double]) -> [String : Double] {
-		var userDefaultsExchangeRates : [String : Double] = [:]
+	private static func convertExchangeRatesForUserDefaults(_ exchangeRates: [Currency: Double]) -> [String : Double] {
+		var userDefaultsExchangeRates: [String: Double] = [:]
 		for exchangeRate in exchangeRates {
 			userDefaultsExchangeRates.updateValue(exchangeRate.value, forKey: exchangeRate.key.rawValue)
 		}
