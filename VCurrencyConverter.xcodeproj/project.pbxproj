@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01254182262633B600E6187E /* LocalCurrecyStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01254181262633B600E6187E /* LocalCurrecyStorage.swift */; };
 		014C1DA62613D37B00048A42 /* JsonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C1DA52613D37B00048A42 /* JsonModel.swift */; };
 		014C1DAB2613D73200048A42 /* CurrencyJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C1DAA2613D73200048A42 /* CurrencyJSONParser.swift */; };
 		014C1EC12618DE7300048A42 /* CBRCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C1EC02618DE7300048A42 /* CBRCurrency.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01254181262633B600E6187E /* LocalCurrecyStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCurrecyStorage.swift; sourceTree = "<group>"; };
 		014C1DA52613D37B00048A42 /* JsonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonModel.swift; sourceTree = "<group>"; };
 		014C1DAA2613D73200048A42 /* CurrencyJSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyJSONParser.swift; sourceTree = "<group>"; };
 		014C1EC02618DE7300048A42 /* CBRCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBRCurrency.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 				014C1EC02618DE7300048A42 /* CBRCurrency.swift */,
 				01DF536525FD542800C5FEBE /* CurrencyConverterLocalData.swift */,
 				014C1DA52613D37B00048A42 /* JsonModel.swift */,
+				01254181262633B600E6187E /* LocalCurrecyStorage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 			files = (
 				014C1EEA2618E93700048A42 /* PanModalPresentationAnimator.swift in Sources */,
 				014C1EFE2618E99F00048A42 /* PanModalPresentable.swift in Sources */,
+				01254182262633B600E6187E /* LocalCurrecyStorage.swift in Sources */,
 				01628E7D26053A5D00ADADFB /* UIView+extension.swift in Sources */,
 				014C1F032618E9BC00048A42 /* PanModalPresentable+Defaults.swift in Sources */,
 				014C1F1C2618EA1A00048A42 /* DimmedView.swift in Sources */,

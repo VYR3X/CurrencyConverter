@@ -9,12 +9,10 @@ import Foundation
 /// Класс для хранения/чтения курса валют в UserDefaults
 final class CurrencyConverterLocalData {
 
-	// Structs:
-	struct Keys {
+	private struct Keys {
 		static let mostRecentExchangeRates = "CurrencyConverterLocalData.Keys.mostRecentExchangeRates"
 	}
 
-	// Static Properties:
 	// • This will never be used once the method CurrencyConverter.updateExchangeRates is called with internet access.
 	// • This is just an emergency callback, in case the user doesn't have internet access the first time running the app.
 	static let fallBackExchangeRates: [Currency: Double] = [
@@ -52,39 +50,18 @@ final class CurrencyConverterLocalData {
 		.ZAR : 15.7631,
 	]
 
-	// Static Methods:
-	/** Saves the most recent exchange rates by locally storing it. */
-	static func saveMostRecentExchangeRates(_ exchangeRates : [Currency : Double]) {
+	// MARK: - Save Currency
+
+	/** Сохраняет самые последние обменные курсы локально. */
+	static func saveExchangeRates(_ exchangeRates: [Currency: Double]) {
 		let convertedExchangeRates = convertExchangeRatesForUserDefaults(exchangeRates)
 		UserDefaults.standard.set(convertedExchangeRates, forKey: Keys.mostRecentExchangeRates)
 	}
 
-	/** Loads the most recent exchange rates from the local storage. */
-	static func loadMostRecentExchangeRates() -> [Currency : Double] {
-		if let userDefaultsExchangeRates = UserDefaults.standard.dictionary(forKey: Keys.mostRecentExchangeRates) as? [String : Double] {
-			return convertExchangeRatesFromUserDefaults(userDefaultsExchangeRates)
-		} else {
-			// Fallback:
-			return fallBackExchangeRates
-		}
-	}
-
-	// Private Static Methods:
-	/** Converts the [String : Double] dictionary with the exchange rates to a [Currency : Double] dictionary. */
-	private static func convertExchangeRatesFromUserDefaults(_ userDefaultsExchangeRates : [String : Double]) -> [Currency : Double] {
-		var exchangeRates : [Currency : Double] = [:]
-		for userDefaultExchangeRate in userDefaultsExchangeRates {
-			if let currency = Currency(rawValue: userDefaultExchangeRate.key) {
-				exchangeRates.updateValue(userDefaultExchangeRate.value, forKey: currency)
-			}
-		}
-		return exchangeRates
-	}
-
 	/**
-	 Converts the [Currency : Double] dictionary with the exchange rates to a [String : Double] one so it can be stored locally.
+	Преобразует словарь [Currency: Double] с курсами обмена в словарь [String: Double], чтобы его можно было хранить локально.
 	 */
-	private static func convertExchangeRatesForUserDefaults(_ exchangeRates: [Currency: Double]) -> [String : Double] {
+	private static func convertExchangeRatesForUserDefaults(_ exchangeRates: [Currency: Double]) -> [String: Double] {
 		var userDefaultsExchangeRates: [String: Double] = [:]
 		for exchangeRate in exchangeRates {
 			userDefaultsExchangeRates.updateValue(exchangeRate.value, forKey: exchangeRate.key.rawValue)
@@ -92,5 +69,27 @@ final class CurrencyConverterLocalData {
 		return userDefaultsExchangeRates
 	}
 
-}
 
+	// MARK: - Load Currency
+
+	/** Загружает самые последние курсы обмена из локального хранилища. */
+	static func loadMostRecentExchangeRates() -> [Currency: Double] {
+		if let userDefaultsExchangeRates = UserDefaults.standard.dictionary(forKey: Keys.mostRecentExchangeRates) as? [String: Double] {
+			return convertExchangeRatesFromUserDefaults(userDefaultsExchangeRates)
+		} else {
+			// Fallback:
+			return fallBackExchangeRates
+		}
+	}
+
+	/** Преобразует словарь [String: Double] с курсами обмена в словарь [Currency: Double]. */
+	private static func convertExchangeRatesFromUserDefaults(_ userDefaultsExchangeRates: [String: Double]) -> [Currency: Double] {
+		var exchangeRates: [Currency: Double] = [:]
+		for userDefaultExchangeRate in userDefaultsExchangeRates {
+			if let currency = Currency(rawValue: userDefaultExchangeRate.key) {
+				exchangeRates.updateValue(userDefaultExchangeRate.value, forKey: currency)
+			}
+		}
+		return exchangeRates
+	}
+}

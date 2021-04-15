@@ -26,7 +26,7 @@ final class CurrencyConverterViewModel {
 			// Получает курс обмена
 			self.exchangeRates = self.xmlParser.getExchangeRates()
 			// Сохраняет обновленный курс обмена в локальное хранилище устройства
-			CurrencyConverterLocalData.saveMostRecentExchangeRates(self.exchangeRates)
+			CurrencyConverterLocalData.saveExchangeRates(self.exchangeRates)
 			completion()
 		}, errorCompletion: {
 			// Обработчик поломки интернет соединения и процих ошибок )
@@ -45,14 +45,16 @@ final class CurrencyConverterViewModel {
 				print("Данные получены успешно \n")
 				// Получает курс обмена
 				self.exchangeRatesCBR = model
+				LocalCurrecyStorage.saveExchangeRates(model)
 				completion()
 			case .failure(let error):
 				print("error: \n \(error)")
+				self.exchangeRatesCBR = LocalCurrecyStorage.loadMostRecentExchangeRates()
 //				completion(.failure(error))
 			}
 		})
 //		exchangeRatesCBR = jsonParser.getExchangeRatesFromCBR()
-		CurrencyConverterLocalData.saveMostRecentExchangeRates(self.exchangeRates)
+//		CurrencyConverterLocalData.saveExchangeRates(self.exchangeRates)
 	}
 
 	/**
