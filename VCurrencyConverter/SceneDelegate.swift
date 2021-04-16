@@ -16,16 +16,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		let window = UIWindow(windowScene: windowScene)
 		let rootViewController = ViewController()
-		rootViewController.view.backgroundColor = .white
+
+//		rootViewController.overrideUserInterfaceStyle = .light
+//		rootViewController.view.backgroundColor = .white
+
 		let navigationController = UINavigationController(rootViewController: rootViewController)
-		navigationController.isNavigationBarHidden = false
+//		navigationController.isNavigationBarHidden = false
 		navigationController.navigationBar.prefersLargeTitles = true
-		navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-		navigationController.navigationBar.tintColor = .black
-//		navigationController.navigationBar.backgroundColor = .systemGray6
+//		navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+//		navigationController.navigationBar.tintColor = .black
+//		navigationController.navigationBar.barTintColor = UIColor.green
+		navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
 
 		window.rootViewController = navigationController
+//		window.overrideUserInterfaceStyle = .light
 		window.makeKeyAndVisible()
+		
 		self.window = window
 	}
 

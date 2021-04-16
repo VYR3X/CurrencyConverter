@@ -47,24 +47,32 @@ final class InputView: UIView {
 		return label
 	}()
 
-	/// Cумма
+	/// Cумма  которую вводит пользователь для пересчета
 	lazy var amountTextField: UITextField = {
 		let textField = UITextField()
 		textField.translatesAutoresizingMaskIntoConstraints = false
 		textField.backgroundColor = .clear
-		textField.textColor = .black
-		textField.delegate = self
-		textField.sizeToFit()
-//		https://stackoverflow.com/questions/28394933/how-do-i-check-when-a-uitextfield-changes
-		textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-//		https://stackoverflow.com/questions/26076054/changing-placeholder-text-color-with-swift
-		// стандартный плейс холдер плохо отображается на устройстве
-		textField.attributedPlaceholder = NSAttributedString(string: "  Введите сумму",
-									 attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
-		textField.keyboardType = .decimalPad
 		textField.layer.borderColor = UIColor.systemGray.cgColor
+
 		textField.layer.borderWidth = 0.5
 		textField.layer.cornerRadius = 3
+		textField.textColor = .black
+		textField.sizeToFit()
+		textField.delegate = self
+
+		// Cтандартный плейс холдер плохо отображается на устройстве
+		// https://stackoverflow.com/questions/26076054/changing-placeholder-text-color-with-swift
+		textField.attributedPlaceholder = NSAttributedString(string: "Введите сумму",
+															 attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
+		textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+
+		textField.keyboardType = .decimalPad
+
+		// Отступ слева
+		let spacerView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+		textField.leftViewMode = UITextField.ViewMode.always
+		textField.leftView = spacerView
+
 		return textField
 	}()
 
@@ -113,12 +121,15 @@ final class InputView: UIView {
 		delegate?.inputAmount(value: amount)
 	}
 
-	/// на устройстве клавиатура имеет запятую ) приходиться менять на точку
+	/// На устройстве клавиатура имеет запятую ) приходиться менять на точку
 	private func changeSymbol(text: String) -> String {
 		return text.replacingOccurrences(of: ",", with: ".", options: .literal, range: nil)
 	}
 }
 
+
+// MARK: - UITextFieldDelegate
+// реализацию выенсти в контроллер
 extension InputView: UITextFieldDelegate {
 
 	// при нажатии на клавиатуре enter скрывается клавиатура
@@ -161,7 +172,13 @@ extension InputView: UITextFieldDelegate {
 				   replacementString string: String) -> Bool {
 		// return NO to not change text
 //		print("While entering the characters this method gets called")
-		return true
+
+		// Set the maximum character length of a UITextField in Swift
+		let maxLength = 7 // 1 миллион )
+		let currentString = (textField.text ?? "") as NSString
+		let newString = currentString.replacingCharacters(in: range, with: string) as NSString
+		return newString.length <= maxLength
+//		return true
 	}
 
 	func textFieldShouldClear(_ textField: UITextField) -> Bool {
@@ -169,15 +186,4 @@ extension InputView: UITextFieldDelegate {
 //		print("TextField should clear method called")
 		return true
 	}
-
-	// https://stackoverflow.com/questions/28394933/how-do-i-check-when-a-uitextfield-changes
-	/// Отслеживаем что вводится в поле )
-//	func textField(_ textField: UITextField,
-//				   shouldChangeCharactersIn range: NSRange,
-//				   replacementString string: String) -> Bool {
-
-//		let amount: Double = Double(textField.text!) ?? 0
-//		delegate?.inputAmount(value: amount)
-//		return true
-//	}
 }

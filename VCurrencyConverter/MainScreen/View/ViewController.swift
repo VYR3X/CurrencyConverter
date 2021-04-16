@@ -45,8 +45,8 @@ final class ViewController: UIViewController {
 		let imageView = UIImageView()
 		imageView.image = UIImage(named: "arrow1")
 		imageView.translatesAutoresizingMaskIntoConstraints = false
-		imageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-		imageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+		imageView.heightAnchor.constraint(equalToConstant: 35).isActive = true
+		imageView.widthAnchor.constraint(equalToConstant: 35).isActive = true
 		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(swapCurrency))
 		imageView.isUserInteractionEnabled = true
 		imageView.addGestureRecognizer(tapGestureRecognizer)
@@ -79,8 +79,8 @@ final class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.backgroundColor = .white
 		self.navigationItem.title = "Обменник валют"
-		self.navigationController?.navigationBar.barTintColor = .black
 		setupView()
 	}
 
@@ -100,7 +100,7 @@ final class ViewController: UIViewController {
 	///   - value: сумма для конвертации
 	///   - valueCurrency: наименование валюты для обмена
 	///   - outputCurrency: наименование валюты результата
-	func convertCurrencyCBR(value: Double,
+	private func convertCurrencyCBR(value: Double,
 							inputCurrency: CBRCurrency,
 							outputCurrency: CBRCurrency) {
 		// Обновили курс валют
@@ -112,8 +112,8 @@ final class ViewController: UIViewController {
 		DispatchQueue.main.async {
 			self.currencyToConvertLabel.currencyLabel.text = inputCurrency.rawValue
 			self.resultCurrencyLabel.currencyLabel.text = outputCurrency.rawValue
-			let result = String(format:"%f", localresult)
-			self.resultCurrencyLabel.resultLabel.text = result
+			let result = String(format:"%.2f", localresult)
+			self.resultCurrencyLabel.resultTextField.text = result
 		}
 		print("••• \(value) \(localInputCurrency) = \(localresult) \(localOutputCurrency) •••")
 	}

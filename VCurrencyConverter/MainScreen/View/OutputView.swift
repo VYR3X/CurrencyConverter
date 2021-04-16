@@ -46,15 +46,25 @@ final class OutputView: UIView {
 	}()
 
 	/// Результат пересчета
-	lazy var resultLabel: UILabel = {
-		let label = UILabel()
-		label.translatesAutoresizingMaskIntoConstraints = false
-		label.backgroundColor = .clear
-		label.sizeToFit()
-		label.text = "0"
-		label.textColor = .black
-		label.textAlignment = .center
-		return label
+	lazy var resultTextField: UITextField = {
+		let textField = UITextField()
+		textField.isUserInteractionEnabled = false
+		textField.translatesAutoresizingMaskIntoConstraints = false
+		textField.backgroundColor = .clear
+		textField.sizeToFit()
+		textField.text = "0"
+		textField.textColor = .black
+		textField.textAlignment = .left
+
+		textField.layer.borderColor = UIColor.systemGray.cgColor
+		textField.layer.borderWidth = 0.5
+		textField.layer.cornerRadius = 3
+
+		let spacerView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+		textField.leftViewMode = UITextField.ViewMode.always
+		textField.leftView = spacerView
+
+		return textField
 	}()
 
 	private let modelInfoStaskView: UIStackView = {
@@ -78,7 +88,7 @@ final class OutputView: UIView {
 		currencyButton.addSubview(currencyLabel)
 		currencyLabel.pinToSuperView()
 
-		modelInfoStaskView.addArrangedSubview(resultLabel)
+		modelInfoStaskView.addArrangedSubview(resultTextField)
 		modelInfoStaskView.addArrangedSubview(currencyButton)
 		addSubview(modelInfoStaskView)
 		self.backgroundColor = .clear
