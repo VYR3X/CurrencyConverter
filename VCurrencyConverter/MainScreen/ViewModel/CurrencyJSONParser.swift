@@ -31,7 +31,8 @@ final class CurrencyJSONParser: NSObject {
 			guard let data = data else { return }
 			// Проверка успешно ли распарсились данные
 			do {
-				let currencyJsonModel = try JSONDecoder().decode(CurrencyJsonModel.self, from: data)
+				let fuckdata: Data = Data()
+				let currencyJsonModel = try JSONDecoder().decode(CurrencyJsonModel.self, from: fuckdata)
 				// перевожу [String: Double] -> [Currency: Double]
 				self.setExchangeRatesCBR(model: currencyJsonModel.rates)
 				// получаю словарь [Currency: Double]

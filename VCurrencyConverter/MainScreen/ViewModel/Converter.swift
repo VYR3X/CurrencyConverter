@@ -45,11 +45,13 @@ final class CurrencyConverterViewModel {
 				print("Данные получены успешно \n")
 				// Получает курс обмена
 				self.exchangeRatesCBR = model
-				LocalCurrecyStorage.saveExchangeRates(model)
+				LocalCurrecyStorage.reserveExchangeRates = model
+//				LocalCurrecyStorage.saveExchangeRates(model)
 				completion()
 			case .failure(let error):
 				print("error: \n \(error)")
-				self.exchangeRatesCBR = LocalCurrecyStorage.loadMostRecentExchangeRates()
+				self.exchangeRatesCBR = LocalCurrecyStorage.reserveExchangeRates 
+//				self.exchangeRatesCBR = LocalCurrecyStorage.loadMostRecentExchangeRates()
 //				completion(.failure(error))
 			}
 		})

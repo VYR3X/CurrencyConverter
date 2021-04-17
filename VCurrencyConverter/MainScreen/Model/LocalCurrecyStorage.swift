@@ -15,18 +15,22 @@ final class LocalCurrecyStorage {
 		case reserveExchangeRates
 	}
 
-	static var reserveExchangeRates: [CBRCurrency: Double]? {
+	/// Словарь для сохранения курса валют
+	static var reserveExchangeRates: [CBRCurrency: Double] {
 		get {
-			return UserDefaults.standard.object(forKey: SettingsKeys.reserveExchangeRates.rawValue) as? [CBRCurrency: Double] ?? [:]
+			if let userDefaultsExchangeRates = UserDefaults.standard.dictionary(forKey: SettingsKeys.mostRecentExchangeRates.rawValue) as? [String: Double] {
+				print("Get local value from UserDefaults")
+				return convertExchangeRatesFromUserDefaults(userDefaultsExchangeRates)
+			} else {
+				print("RESIEVE ERROR MODEL FROM UserDefaults")
+				return [CBRCurrency: Double]()
+			}
 		}
 		set {
-			let defaults = UserDefaults.standard
 			let key = SettingsKeys.reserveExchangeRates.rawValue
-			if let dictionary = newValue {
-				defaults.set(dictionary, forKey: key)
-			} else {
-				defaults.removeObject(forKey: key)
-			}
+			let dictionary = convertExchangeRatesForUserDefaults(newValue)
+			print("Save new value in UserDefaults")
+			UserDefaults.standard.set(dictionary, forKey: key)
 		}
 	}
 
@@ -41,6 +45,7 @@ final class LocalCurrecyStorage {
 
 	/**
 	Преобразует словарь [Currency: Double] с курсами обмена в словарь [String: Double], чтобы его можно было хранить локально.
+	так как словаь [Currency: Double] нельзя сразу созратнить в UserDefaults так как Currency - это кастомный тип данных
 	 */
 	private static func convertExchangeRatesForUserDefaults(_ exchangeRates: [CBRCurrency: Double]) -> [String: Double] {
 		var userDefaultsExchangeRates: [String: Double] = [:]
@@ -59,7 +64,8 @@ final class LocalCurrecyStorage {
 			return convertExchangeRatesFromUserDefaults(userDefaultsExchangeRates)
 		} else {
 			// Fallback:
-			return reserveExchangeRates!
+			return [CBRCurrency: Double]()
+//			return reserveExchangeRates!
 		}
 	}
 
@@ -73,5 +79,4 @@ final class LocalCurrecyStorage {
 		}
 		return exchangeRates
 	}
-	
 }
