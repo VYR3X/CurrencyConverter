@@ -40,9 +40,6 @@
 		01DF533525FD50AB00C5FEBE /* VCurrencyConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DF533425FD50AB00C5FEBE /* VCurrencyConverterTests.swift */; };
 		01DF534025FD50AB00C5FEBE /* VCurrencyConverterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DF533F25FD50AB00C5FEBE /* VCurrencyConverterUITests.swift */; };
 		01DF535125FD50D600C5FEBE /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DF535025FD50D600C5FEBE /* Converter.swift */; };
-		01DF535925FD53AB00C5FEBE /* CurrencyXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DF535825FD53AB00C5FEBE /* CurrencyXMLParser.swift */; };
-		01DF536125FD53F700C5FEBE /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DF536025FD53F700C5FEBE /* Currency.swift */; };
-		01DF536625FD542800C5FEBE /* CurrencyConverterLocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DF536525FD542800C5FEBE /* CurrencyConverterLocalData.swift */; };
 		01EF568826247A8800FAD80B /* OutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EF568726247A8800FAD80B /* OutputView.swift */; };
 /* End PBXBuildFile section */
 
@@ -103,9 +100,6 @@
 		01DF533F25FD50AB00C5FEBE /* VCurrencyConverterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCurrencyConverterUITests.swift; sourceTree = "<group>"; };
 		01DF534125FD50AB00C5FEBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01DF535025FD50D600C5FEBE /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
-		01DF535825FD53AB00C5FEBE /* CurrencyXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyXMLParser.swift; sourceTree = "<group>"; };
-		01DF536025FD53F700C5FEBE /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
-		01DF536525FD542800C5FEBE /* CurrencyConverterLocalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterLocalData.swift; sourceTree = "<group>"; };
 		01EF568726247A8800FAD80B /* OutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -321,7 +315,6 @@
 		01DF535525FD533B00C5FEBE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				01DF535825FD53AB00C5FEBE /* CurrencyXMLParser.swift */,
 				014C1DAA2613D73200048A42 /* CurrencyJSONParser.swift */,
 				01DF535025FD50D600C5FEBE /* Converter.swift */,
 			);
@@ -331,9 +324,7 @@
 		01DF535625FD534600C5FEBE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				01DF536025FD53F700C5FEBE /* Currency.swift */,
 				014C1EC02618DE7300048A42 /* CBRCurrency.swift */,
-				01DF536525FD542800C5FEBE /* CurrencyConverterLocalData.swift */,
 				014C1DA52613D37B00048A42 /* JsonModel.swift */,
 				01254181262633B600E6187E /* LocalCurrecyStorage.swift */,
 			);
@@ -503,20 +494,17 @@
 				01DF531D25FD50AA00C5FEBE /* SceneDelegate.swift in Sources */,
 				01DF535125FD50D600C5FEBE /* Converter.swift in Sources */,
 				014C1EC12618DE7300048A42 /* CBRCurrency.swift in Sources */,
-				01DF536125FD53F700C5FEBE /* Currency.swift in Sources */,
 				01628E752605298C00ADADFB /* InputView.swift in Sources */,
 				014C1EEF2618E95000048A42 /* PanModalPresentationController.swift in Sources */,
 				014C1F262618EA9C00048A42 /* HeaderView.swift in Sources */,
 				014C1F0D2618E9E300048A42 /* PanModalPresentable+LayoutHelpers.swift in Sources */,
 				014C1F352618EB0700048A42 /* UserGroupMemberPresentable.swift in Sources */,
 				014C1F2B2618EAA500048A42 /* CurrencyCell.swift in Sources */,
-				01DF536625FD542800C5FEBE /* CurrencyConverterLocalData.swift in Sources */,
 				014C1DAB2613D73200048A42 /* CurrencyJSONParser.swift in Sources */,
 				01EF568826247A8800FAD80B /* OutputView.swift in Sources */,
 				014C1DA62613D37B00048A42 /* JsonModel.swift in Sources */,
 				014C1F212618EA2800048A42 /* PanContainerView.swift in Sources */,
 				014C1F082618E9D100048A42 /* PanModalPresentable+UIViewController.swift in Sources */,
-				01DF535925FD53AB00C5FEBE /* CurrencyXMLParser.swift in Sources */,
 				014C1F172618EA0900048A42 /* UIViewController+PanModalPresenterProtocol.swift in Sources */,
 				014C1EF92618E99200048A42 /* PanModalHeight.swift in Sources */,
 				014C1F122618E9F600048A42 /* PanModalPresenter.swift in Sources */,

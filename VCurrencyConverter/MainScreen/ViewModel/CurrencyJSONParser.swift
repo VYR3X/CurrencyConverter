@@ -31,8 +31,7 @@ final class CurrencyJSONParser: NSObject {
 			guard let data = data else { return }
 			// Проверка успешно ли распарсились данные
 			do {
-				let fuckdata: Data = Data()
-				let currencyJsonModel = try JSONDecoder().decode(CurrencyJsonModel.self, from: fuckdata)
+				let currencyJsonModel = try JSONDecoder().decode(CurrencyJsonModel.self, from: data)
 				// перевожу [String: Double] -> [Currency: Double]
 				self.setExchangeRatesCBR(model: currencyJsonModel.rates)
 				// получаю словарь [Currency: Double]
@@ -41,7 +40,7 @@ final class CurrencyJSONParser: NSObject {
 				completion(.success(result))
 			}
 			catch let jsonError {
-				print("could not parse data")
+				print("Ошибка парсинга данных /n")
 				completion(.failure(jsonError))
 			}
 		}.resume()

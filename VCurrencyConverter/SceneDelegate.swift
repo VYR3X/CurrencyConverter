@@ -17,19 +17,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let window = UIWindow(windowScene: windowScene)
 		let rootViewController = ViewController()
 
-//		rootViewController.overrideUserInterfaceStyle = .light
-//		rootViewController.view.backgroundColor = .white
 
 		let navigationController = UINavigationController(rootViewController: rootViewController)
-//		navigationController.isNavigationBarHidden = false
 		navigationController.navigationBar.prefersLargeTitles = true
-//		navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-//		navigationController.navigationBar.tintColor = .black
-//		navigationController.navigationBar.barTintColor = UIColor.green
-		navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
+
+		let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+//		navigationController.navigationBar.titleTextAttributes = textAttributes // для стандартного navbar
+//		1) https://stackoverflow.com/questions/43706103/how-to-change-navigationitem-title-color/43706508
+//		2) https://stackoverflow.com/questions/44823284/change-ios-11-large-title-color
+		navigationController.navigationBar.largeTitleTextAttributes = textAttributes
 
 		window.rootViewController = navigationController
-//		window.overrideUserInterfaceStyle = .light
+		window.overrideUserInterfaceStyle = .light
 		window.makeKeyAndVisible()
 		
 		self.window = window

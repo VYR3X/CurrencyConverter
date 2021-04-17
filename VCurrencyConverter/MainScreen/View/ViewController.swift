@@ -79,8 +79,8 @@ final class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = .white
 		self.navigationItem.title = "Обменник валют"
+		view.backgroundColor = .white
 		setupView()
 	}
 
@@ -161,6 +161,7 @@ final class ViewController: UIViewController {
 			infoLabel.topAnchor.constraint(equalTo: resultCurrencyLabel.bottomAnchor, constant: 25)
 		])
 	}
+
 }
 
 
