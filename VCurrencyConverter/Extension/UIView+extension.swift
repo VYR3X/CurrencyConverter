@@ -41,3 +41,23 @@ public extension UIView {
 		])
 	}
 }
+
+// MARK: - UIView метод, для добавления нескольких вью сразу
+public extension UIView {
+
+	/// Добавить несколько сабвью
+	///
+	/// - Parameter views:  несколько вью
+	func addSubviews(_ views: UIView...) {
+		addSubviews(views)
+	}
+
+	/// Добавить массив сабвью
+	///
+	/// - Parameter views:  массив вью
+	func addSubviews(_ views: [UIView]) {
+		for view in views {
+			addSubview(view)
+		}
+	}
+}

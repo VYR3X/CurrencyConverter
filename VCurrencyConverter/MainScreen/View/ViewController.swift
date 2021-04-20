@@ -77,11 +77,32 @@ final class ViewController: UIViewController {
 		return label
 	}()
 
+	private var scrollView: UIScrollView = {
+		let scrollView = UIScrollView(frame: .zero)
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		return scrollView
+	}()
+
+	private lazy var contentViewSuka = UIView()
+	private lazy var mainContentView = ContentView()
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		registerNotifications()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.navigationItem.title = "Обменник валют"
 		view.backgroundColor = .white
+		self.hideKeyboardWhenTappedAround()
+		setupScrollView()
 		setupView()
+	}
+
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		scrollView.contentInset.bottom = 0
 	}
 
 	/// проверка состояния
@@ -118,6 +139,28 @@ final class ViewController: UIViewController {
 		print("••• \(value) \(localInputCurrency) = \(localresult) \(localOutputCurrency) •••")
 	}
 
+	// MARK: - Keyboard
+
+	private func registerNotifications() {
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+	}
+
+	@objc func keyboardWillShow(notification: NSNotification) {
+		guard let userInfo = notification.userInfo else { return }
+		var keyboardFrame: CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+		keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+
+		var contentInset: UIEdgeInsets = self.scrollView.contentInset
+		contentInset.bottom = keyboardFrame.size.height // + 20 px
+		scrollView.contentInset = contentInset
+	}
+
+	@objc func keyboardWillHide(notification: NSNotification) {
+		let contentInset: UIEdgeInsets = UIEdgeInsets.zero
+		scrollView.contentInset = contentInset
+	}
+
 	@objc private func swapCurrency() {
 		let temp = localInputCurrency
 		localInputCurrency = localOutputCurrency
@@ -127,41 +170,57 @@ final class ViewController: UIViewController {
 						   outputCurrency: localOutputCurrency)
 	}
 
+	private func setupScrollView() {
+		contentViewSuka.translatesAutoresizingMaskIntoConstraints = false
+
+		self.view.addSubview(scrollView)
+		scrollView.pinToSuperView()
+		scrollView.addSubview(contentViewSuka)
+		contentViewSuka.pinToSuperView()
+	}
+
 	private func setupView() {
-		view.addSubview(fromLabel)
-		view.addSubview(currencyToConvertLabel)
-		view.addSubview(swapImageView)
-		view.addSubview(toLabel)
-		view.addSubview(resultCurrencyLabel)
-		view.addSubview(infoLabel)
+//		contentViewSuka.addSubview(mainContentView)
+//		contentViewSuka.backgroundColor = .orange
+//		mainContentView.leftAnchor.constraint(equalTo: contentViewSuka.leftAnchor).isActive = true
+//		mainContentView.rightAnchor.constraint(equalTo: contentViewSuka.rightAnchor).isActive = true
+//		mainContentView.topAnchor.constraint(equalTo: contentViewSuka.topAnchor).isActive = true
+//		mainContentView.bottomAnchor.constraint(equalTo: contentViewSuka.bottomAnchor).isActive = true
+
+		contentViewSuka.addSubviews(fromLabel,
+						 currencyToConvertLabel,
+						 swapImageView,
+						 toLabel,
+						 resultCurrencyLabel,
+						 infoLabel)
 		NSLayoutConstraint.activate([
-			fromLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-			fromLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-			fromLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+			fromLabel.leftAnchor.constraint(equalTo: contentViewSuka.leftAnchor, constant: 20),
+			fromLabel.rightAnchor.constraint(equalTo: contentViewSuka.rightAnchor, constant: -20),
+			fromLabel.topAnchor.constraint(equalTo: contentViewSuka.safeAreaLayoutGuide.topAnchor, constant: 20),
 			fromLabel.heightAnchor.constraint(equalToConstant: 40),
 
-			currencyToConvertLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-			currencyToConvertLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+			currencyToConvertLabel.leftAnchor.constraint(equalTo: contentViewSuka.leftAnchor, constant: 20),
+			currencyToConvertLabel.rightAnchor.constraint(equalTo: contentViewSuka.rightAnchor, constant: -20),
 			currencyToConvertLabel.topAnchor.constraint(equalTo: fromLabel.bottomAnchor),
 
 			swapImageView.topAnchor.constraint(equalTo: currencyToConvertLabel.bottomAnchor, constant: 25),
 			swapImageView.centerXAnchor.constraint(equalTo: fromLabel.centerXAnchor),
 
-			toLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-			toLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+			toLabel.leftAnchor.constraint(equalTo: contentViewSuka.leftAnchor, constant: 20),
+			toLabel.rightAnchor.constraint(equalTo: contentViewSuka.rightAnchor, constant: -20),
 			toLabel.topAnchor.constraint(equalTo: swapImageView.bottomAnchor),
 			toLabel.heightAnchor.constraint(equalToConstant: 40),
 
-			resultCurrencyLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-			resultCurrencyLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+			resultCurrencyLabel.leftAnchor.constraint(equalTo: contentViewSuka.leftAnchor, constant: 20),
+			resultCurrencyLabel.rightAnchor.constraint(equalTo: contentViewSuka.rightAnchor, constant: -20),
 			resultCurrencyLabel.topAnchor.constraint(equalTo: toLabel.bottomAnchor),
 
-			infoLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-			infoLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-			infoLabel.topAnchor.constraint(equalTo: resultCurrencyLabel.bottomAnchor, constant: 25)
+			infoLabel.leftAnchor.constraint(equalTo: contentViewSuka.leftAnchor, constant: 20),
+			infoLabel.rightAnchor.constraint(equalTo: contentViewSuka.rightAnchor, constant: -20),
+			infoLabel.topAnchor.constraint(equalTo: resultCurrencyLabel.bottomAnchor, constant: 25),
+			infoLabel.bottomAnchor.constraint(equalTo: contentViewSuka.bottomAnchor)
 		])
 	}
-
 }
 
 
@@ -204,5 +263,18 @@ extension ViewController: CurrencyListViewControllerDelegate {
 		guard let state = selectedView,
 			  let cur = CBRCurrency(rawValue: vm.codeName) else { return }
 		moveToState(state: state, currency: cur)
+	}
+}
+
+// для скрытия клавиатуры
+extension UIViewController {
+	func hideKeyboardWhenTappedAround() {
+		let tapGesture = UITapGestureRecognizer(target: self,
+						 action: #selector(hideKeyboard))
+		view.addGestureRecognizer(tapGesture)
+	}
+
+	@objc func hideKeyboard() {
+		view.endEditing(true)
 	}
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		01254182262633B600E6187E /* LocalCurrecyStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01254181262633B600E6187E /* LocalCurrecyStorage.swift */; };
+		01455FE5262F2D8D007BE5A2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01455FE4262F2D8D007BE5A2 /* ContentView.swift */; };
 		014C1DA62613D37B00048A42 /* JsonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C1DA52613D37B00048A42 /* JsonModel.swift */; };
 		014C1DAB2613D73200048A42 /* CurrencyJSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C1DAA2613D73200048A42 /* CurrencyJSONParser.swift */; };
 		014C1EC12618DE7300048A42 /* CBRCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014C1EC02618DE7300048A42 /* CBRCurrency.swift */; };
@@ -62,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		01254181262633B600E6187E /* LocalCurrecyStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCurrecyStorage.swift; sourceTree = "<group>"; };
+		01455FE4262F2D8D007BE5A2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		014C1DA52613D37B00048A42 /* JsonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonModel.swift; sourceTree = "<group>"; };
 		014C1DAA2613D73200048A42 /* CurrencyJSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyJSONParser.swift; sourceTree = "<group>"; };
 		014C1EC02618DE7300048A42 /* CBRCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBRCurrency.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				01DF531E25FD50AA00C5FEBE /* ViewController.swift */,
 				01628E742605298C00ADADFB /* InputView.swift */,
 				01EF568726247A8800FAD80B /* OutputView.swift */,
+				01455FE4262F2D8D007BE5A2 /* ContentView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				01DF532525FD50AA00C5FEBE /* VCurrencyConverter.xcdatamodeld in Sources */,
 				014C1EF42618E98000048A42 /* PanModalPresentationDelegate.swift in Sources */,
 				01DF531F25FD50AA00C5FEBE /* ViewController.swift in Sources */,
+				01455FE5262F2D8D007BE5A2 /* ContentView.swift in Sources */,
 				01DF531B25FD50AA00C5FEBE /* AppDelegate.swift in Sources */,
 				01DF531D25FD50AA00C5FEBE /* SceneDelegate.swift in Sources */,
 				01DF535125FD50D600C5FEBE /* Converter.swift in Sources */,
