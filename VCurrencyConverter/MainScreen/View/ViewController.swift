@@ -83,7 +83,7 @@ final class ViewController: UIViewController {
 		return scrollView
 	}()
 
-	private lazy var contentViewSuka = UIView()
+	private lazy var contentView = UIView()
 	private lazy var mainContentView = ContentView()
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -97,7 +97,7 @@ final class ViewController: UIViewController {
 		view.backgroundColor = .white
 		self.hideKeyboardWhenTappedAround()
 		setupScrollView()
-		setupView()
+//		setupMainCOntent()
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
@@ -171,54 +171,59 @@ final class ViewController: UIViewController {
 	}
 
 	private func setupScrollView() {
-		contentViewSuka.translatesAutoresizingMaskIntoConstraints = false
+		contentView.translatesAutoresizingMaskIntoConstraints = false
 
 		self.view.addSubview(scrollView)
 		scrollView.pinToSuperView()
-		scrollView.addSubview(contentViewSuka)
-		contentViewSuka.pinToSuperView()
+
+//		scrollView.addSubview(mainContentView)
+//		mainContentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+//		mainContentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+//		mainContentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 200).isActive = true
+//		mainContentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+
+		scrollView.addSubview(contentView)
+		contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+		contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+		contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+		contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+
+		setupView()
 	}
 
 	private func setupView() {
-//		contentViewSuka.addSubview(mainContentView)
-//		contentViewSuka.backgroundColor = .orange
-//		mainContentView.leftAnchor.constraint(equalTo: contentViewSuka.leftAnchor).isActive = true
-//		mainContentView.rightAnchor.constraint(equalTo: contentViewSuka.rightAnchor).isActive = true
-//		mainContentView.topAnchor.constraint(equalTo: contentViewSuka.topAnchor).isActive = true
-//		mainContentView.bottomAnchor.constraint(equalTo: contentViewSuka.bottomAnchor).isActive = true
-
-		contentViewSuka.addSubviews(fromLabel,
+		contentView.addSubviews(fromLabel,
 						 currencyToConvertLabel,
 						 swapImageView,
 						 toLabel,
 						 resultCurrencyLabel,
 						 infoLabel)
 		NSLayoutConstraint.activate([
-			fromLabel.leftAnchor.constraint(equalTo: contentViewSuka.leftAnchor, constant: 20),
-			fromLabel.rightAnchor.constraint(equalTo: contentViewSuka.rightAnchor, constant: -20),
-			fromLabel.topAnchor.constraint(equalTo: contentViewSuka.safeAreaLayoutGuide.topAnchor, constant: 20),
+			fromLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
+			fromLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
+			fromLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 20),
 			fromLabel.heightAnchor.constraint(equalToConstant: 40),
 
-			currencyToConvertLabel.leftAnchor.constraint(equalTo: contentViewSuka.leftAnchor, constant: 20),
-			currencyToConvertLabel.rightAnchor.constraint(equalTo: contentViewSuka.rightAnchor, constant: -20),
+			currencyToConvertLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
+			currencyToConvertLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
 			currencyToConvertLabel.topAnchor.constraint(equalTo: fromLabel.bottomAnchor),
 
 			swapImageView.topAnchor.constraint(equalTo: currencyToConvertLabel.bottomAnchor, constant: 25),
 			swapImageView.centerXAnchor.constraint(equalTo: fromLabel.centerXAnchor),
 
-			toLabel.leftAnchor.constraint(equalTo: contentViewSuka.leftAnchor, constant: 20),
-			toLabel.rightAnchor.constraint(equalTo: contentViewSuka.rightAnchor, constant: -20),
+			toLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
+			toLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
 			toLabel.topAnchor.constraint(equalTo: swapImageView.bottomAnchor),
 			toLabel.heightAnchor.constraint(equalToConstant: 40),
 
-			resultCurrencyLabel.leftAnchor.constraint(equalTo: contentViewSuka.leftAnchor, constant: 20),
-			resultCurrencyLabel.rightAnchor.constraint(equalTo: contentViewSuka.rightAnchor, constant: -20),
+			resultCurrencyLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
+			resultCurrencyLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
 			resultCurrencyLabel.topAnchor.constraint(equalTo: toLabel.bottomAnchor),
 
-			infoLabel.leftAnchor.constraint(equalTo: contentViewSuka.leftAnchor, constant: 20),
-			infoLabel.rightAnchor.constraint(equalTo: contentViewSuka.rightAnchor, constant: -20),
+			infoLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
+			infoLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
 			infoLabel.topAnchor.constraint(equalTo: resultCurrencyLabel.bottomAnchor, constant: 25),
-			infoLabel.bottomAnchor.constraint(equalTo: contentViewSuka.bottomAnchor)
+			infoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
 		])
 	}
 }
