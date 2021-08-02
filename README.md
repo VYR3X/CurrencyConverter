@@ -7,7 +7,7 @@
 
 ## Главный экран приложения 
 
-![GitHub Logo](/images/main.png)
+<img src="/images/main.png" width="30%">
 
 ## Архитектура 
 * MVVM 
