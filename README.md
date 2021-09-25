@@ -1,5 +1,6 @@
 # CurrencyConverter
 
+[![Build Status](https://app.travis-ci.com/VYR3X/CurrencyConverter.svg?branch=main)](https://app.travis-ci.com/VYR3X/CurrencyConverter)
 
 ## Описание
 
