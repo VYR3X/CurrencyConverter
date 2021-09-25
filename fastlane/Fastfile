@@ -1,0 +1,12 @@
+desc "Hello lane print string in console )"
+lane :hello_lane do
+   puts 'Hello world'
+end
+
+desc "Build debug scheme for testing"
+lane :build_for_testing do 
+   # cocoapods
+   scan(
+      clean: true
+   )
+end 
